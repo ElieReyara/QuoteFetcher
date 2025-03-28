@@ -1,6 +1,7 @@
 import requests
 
-API_INFO = ("qustxpryrGJR+V5OGPjkVQ==nwDMWd6UTOfhEtKI", "https://api.api-ninjas.com/v1/quotes")
+KEY_USER = input("Enter your API Key: \n")
+API_INFO = (KEY_USER, "https://api.api-ninjas.com/v1/quotes")
 authors_seen = set() 
 def get_randomQuote():
     API_KEY, url = API_INFO
