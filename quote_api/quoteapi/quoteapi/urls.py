@@ -19,5 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path("quotes/", include("quotes.urls")),
+    path("", include("quotes.urls")),
+    path("random/", include("quotes.urls")),
     path('admin/', admin.site.urls),
 ]
