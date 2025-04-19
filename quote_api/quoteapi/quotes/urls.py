@@ -3,6 +3,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    path("quotes/quote", views.quote, name="quote"),
-    path("/random", views.random, name="random")
+    path("quote/", views.quote, name="quote"),
+    path("random/", views.random, name="random")
 ]
