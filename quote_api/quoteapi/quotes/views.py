@@ -36,8 +36,8 @@ def quote(request):
 def savedQuotes(request):
     #objects etant le manager du model
     querySet = Quote.objects.all().values('text', 'author', 'category')
-    authorSeen = Quote.objects.values('author').distinct()
     if querySet.exists():
+        authorSeen = Quote.objects.values('author').distinct()
         allQuote = list(querySet)
         authorSeen = [item['author'] for item in authorSeen]
         return JsonResponse({'quotes':allQuote, 'authors':authorSeen}, safe=False)
