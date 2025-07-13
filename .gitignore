@@ -3,3 +3,4 @@ myvenv/
 __pycache__/
 .env
 requirements.txt
+db.sqlite3
