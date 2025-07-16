@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.http import JsonResponse
 import requests
 import os
@@ -11,7 +12,7 @@ dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the quote index.")
+    return render(request, 'quotes/index.html')
 
 def random(request):
     return HttpResponse("Bonjour Random")

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Générateur de citations{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS CDN (ou à remplacer par un build local si tu l'utilises avec PostCSS) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <!-- NAVBAR -->
+    <nav class="bg-white shadow-md px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gray-800">
+            <a href="#">💬 Générateur de citations</a>
+        </h1>
+        
+        <!-- Déconnexion -->
+        {% if user.is_authenticated %}
+            <form action="#" method="post" class="inline">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                    Déconnexion
+                </button>
+            </form>
+        {% else %}
+            <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                Connexion
+            </a>
+        {% endif %}
+    </nav>
+
+    <!-- CONTENU DES PAGES -->
+    <main class="container mx-auto mt-8 px-4">
+        {% block content %}
+        <!-- Contenu spécifique à chaque page -->
+        {% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-12 text-center text-gray-500 py-4">
+        &copy; 2025 - Générateur de citations Django
+    </footer>
+
+</body>
+</html>
