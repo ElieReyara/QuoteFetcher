@@ -14,9 +14,6 @@ load_dotenv(dotenv_path)
 def index(request):
     return render(request, 'quotes/index.html')
 
-def random(request):
-    return HttpResponse("Bonjour Random")
-
 def quote(request):
     KEY_USER = os.getenv("KEY_USER")
     API_INFO = (KEY_USER, "https://api.api-ninjas.com/v1/quotes")

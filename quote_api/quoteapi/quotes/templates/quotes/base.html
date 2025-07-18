@@ -17,12 +17,18 @@
         
         <!-- Déconnexion -->
         {% if user.is_authenticated %}
-            <form action="{% url 'logout' %}" method="post" class="inline">
-                {% csrf_token %}
-                <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
-                    Déconnexion
-                </button>
-            </form>
+            <div class="px-6 flex space-x-4 justify-between items-center">
+                <div class="space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-gray-900">Profil</a>
+                    <a href="#" class="bg-gray-500 px-3 py-2 rounded rounded text-gray-700 hover:text-gray-900">Acceuil</a>
+                </div>
+                <form action="{% url 'logout' %}" method="post" class="inline">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                        Déconnexion
+                    </button>
+                </form>
+            </div>
         {% else %}
             <a href="#" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
                 Connexion

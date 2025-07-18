@@ -1,1 +1,23 @@
 {% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="max-w-xl mx-auto p-6 bg-white rounded-xl shadow-md relative">
+    <!-- Icône discrète en haut à droite -->
+    <div class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 cursor-pointer transition-opacity opacity-60">
+      <!-- Exemple d'icône : copier (tu peux remplacer par une autre icône si tu veux) -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-4 4h6a2 2 0 012 2v6a2 2 0 01-2 2h-6a2 2 0 01-2-2v-6z" />
+      </svg>
+    </div>
+  
+    <!-- Contenu de la citation -->
+    <blockquote class="text-gray-800 text-lg leading-relaxed">
+      “Le véritable pouvoir, c’est celui de se maîtriser soi-même, même au milieu du chaos.”
+    </blockquote>
+  
+    <!-- Auteur -->
+    <div class="mt-4 text-right text-sm text-gray-500">
+      — Anonyme
+    </div>
+  </div>  
+{% endblock %}
