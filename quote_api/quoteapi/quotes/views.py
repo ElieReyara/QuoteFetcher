@@ -12,7 +12,7 @@ dotenv_path = find_dotenv()
 load_dotenv(dotenv_path)
 
 def index(request):
-    return render(request, 'quotes/index.html')
+    return render(request, 'quotes/acceuil.html')
 
 def quote(request):
     KEY_USER = os.getenv("KEY_USER")

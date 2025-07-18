@@ -1,0 +1,41 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="min-h-screen bg-gray-100 flex flex-col items-center justify-center px-4 py-8">
+  <!-- Bloc principal -->
+  <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-xl space-y-6">
+    <!-- Catégorie -->
+    <div class="text-sm text-gray-500 text-right font-medium">
+      🌿 Inspiration
+    </div>
+
+    <!-- Citation -->
+    <blockquote class="text-xl font-semibold text-gray-800 italic text-center">
+      "La plus grande gloire n’est pas de ne jamais tomber, mais de se relever à chaque chute."
+    </blockquote>
+
+    <!-- Auteur -->
+    <div class="text-right text-sm text-gray-600">
+      — Nelson Mandela
+    </div>
+
+    <!-- Boutons -->
+    <div class="flex justify-between gap-4">
+      <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg font-medium transition">
+        💾 Sauvegarder
+      </button>
+      <button class="w-full bg-gray-200 hover:bg-gray-300 text-gray-800 py-2 px-4 rounded-lg font-medium transition">
+        ⏭️ Passer
+      </button>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <div class="mt-6 text-sm text-gray-600 space-x-6">
+    <a href="#" class="hover:underline">🏠 Accueil</a>
+    <a href="#" class="hover:underline">💾 Citations sauvegardées</a>
+    <a href="#" class="hidden hover:underline">⚙️ Paramètres</a>
+  </div>
+</div>
+ 
+{% endblock %}
