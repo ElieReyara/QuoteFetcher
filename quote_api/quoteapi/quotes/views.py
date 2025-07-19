@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.http import JsonResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 import requests
 import json
 import os
@@ -12,7 +12,7 @@ dotenv_path = find_dotenv()
 #On va charger tout les var d'enrironnements
 load_dotenv(dotenv_path)
 
-def quote(request):
+def generateQuote(request):
     KEY_USER = os.getenv("KEY_USER")
     API_INFO = (KEY_USER, "https://api.api-ninjas.com/v1/quotes")
     API_KEY, url = API_INFO
@@ -28,16 +28,30 @@ def quote(request):
             }
             # Sérialise le dictionnaire en une chaîne JSON
             json_quote_data = json.dumps(quote_data)
-            #On cree un objet (enregistrement) et on le sauvegarde dans la base
-            #quote = Quote(text=data[0]['quote'], author=data[0]['author'], category=data[0]['category'])
-            return render(request, 'quotes/acceuil.html', {
-                'quote':quote_data,
-                'json_quote_data': json_quote_data
-                })
+            request.session['json_quote_data'] = json_quote_data
+            return redirect('displayQuote')
         else:
             return JsonResponse({'error': f"API error: {response.status_code}"})
     except requests.RequestException as e:
         return JsonResponse({'error':str(e)})
+
+def displayQuote(request):
+    currentQuoteJson = request.session.get('json_quote_data')
+    if currentQuoteJson:
+        quote = json.loads(currentQuoteJson)
+    else:
+        quoteDict = {
+                'text': 'Today is an opportunity to create the tomorrow you want',
+                'author': 'Anonymous',
+                'category': 'Self-Improvement',
+            }
+        # Sérialise le dictionnaire en une chaîne JSON
+        quote = json.dumps(quoteDict)
+    context = {
+        'quote':quote,
+        'json_quote_data':currentQuoteJson,
+    }
+    return render(request, 'quotes/acceuil.html',context)
 
 def saveQuote(request):
     if request.method == 'POST': 
@@ -46,7 +60,7 @@ def saveQuote(request):
         quote = Quote(text=quoteData['text'], author=quoteData['author'], category=quoteData['category'])
         quote.save()
         #redirect('quote', {'quote':quote})
-        return redirect('quote')
+        return redirect('displayQuote')
     else:
         return HttpResponse("Ca n'a pas marche mec")
 
