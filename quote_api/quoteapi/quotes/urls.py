@@ -5,5 +5,5 @@ urlpatterns = [
     path("", views.displayQuote, name="displayQuote"),
     path("generateQuote/", views.generateQuote, name="generateQuote"),
     path("saveQuote/", views.saveQuote, name="saveQuote"),
-    path("savedQuotes/", views.retrieveSavedQuote, name="savedQuotes")
+    path("savedQuotes/", views.retrieveSavedQuote, name="retrieveSavedQuote")
 ]

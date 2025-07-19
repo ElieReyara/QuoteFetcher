@@ -1,0 +1,20 @@
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-2xl shadow-lg">
+    <h2 class="text-2xl font-semibold mb-6 text-gray-800">Citations sauvegardées</h2>
+
+    {% if quotes %}
+        <ul class="space-y-4">
+            {% for quote in quotes %}
+                <li class="border border-gray-200 p-4 rounded-xl bg-gray-50">
+                    <p class="text-lg text-gray-700 italic">“{{ quote.text }}”</p>
+                    <p class="text-sm text-right text-gray-500 mt-2">— {{ quote.author }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-gray-500">Aucune citation enregistrée pour le moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

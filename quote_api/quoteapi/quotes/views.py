@@ -97,6 +97,11 @@ def retrieveSavedQuote(request):
         authorSeen = Quote.objects.values('author').distinct()
         allQuote = list(querySet)
         authorSeen = [item['author'] for item in authorSeen]
+        context = {
+            'quotes':allQuote,
+            'authors':authorSeen
+        }
+        return render(request, 'quotes/mesCitations.html',context)
         return JsonResponse({'quotes':allQuote, 'authors':authorSeen}, safe=False)
     else:
         return JsonResponse({'message':f"Pas encore de citation sauvegarde"})
