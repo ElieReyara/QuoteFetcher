@@ -29,9 +29,11 @@ def generateQuote(request):
             request.session['json_quote_data'] = json_quote_data
             return redirect('displayQuote')
         else:
-            return JsonResponse({'error': f"API error: {response.status_code}"})
+            messages.error(request, f"API error: {response.status_code}")
+            return redirect('displayQuote')
     except requests.RequestException as e:
-        return JsonResponse({'error':str(e)})
+        messages.error(request, f"Une erreur inattendue est survenue : {str(e)}")
+        return redirect('displayQuote')
 
 def displayQuote(request):
     currentQuoteJson = request.session.get('json_quote_data')
