@@ -36,7 +36,15 @@
             </a>
         {% endif %}
     </nav>
-
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
     <!-- CONTENU DES PAGES -->
     <main class="container mx-auto mt-8 px-4">
         {% block content %}
@@ -48,6 +56,5 @@
     <footer class="mt-12 text-center text-gray-500 py-4">
         &copy; 2025 - Générateur de citations Django
     </footer>
-
 </body>
 </html>

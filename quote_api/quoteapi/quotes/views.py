@@ -1,9 +1,7 @@
-from django.http import HttpResponse
-from django.http import JsonResponse
+import os, json, requests
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-import requests
-import json
-import os
+from django.contrib import messages
 from dotenv import find_dotenv,load_dotenv
 from quotes.models import Quote
 
@@ -38,7 +36,11 @@ def generateQuote(request):
 def displayQuote(request):
     currentQuoteJson = request.session.get('json_quote_data')
     if currentQuoteJson:
-        quote = json.loads(currentQuoteJson)
+        try:
+            quote = json.loads(currentQuoteJson)
+        except json.JSONDecodeError:
+            #A ameliorer
+            print("Erreur: La chaîne JSON stockée dans la session est mal formée.")
     else:
         quoteDict = {
                 'text': 'Today is an opportunity to create the tomorrow you want',
@@ -56,14 +58,35 @@ def displayQuote(request):
 def saveQuote(request):
     if request.method == 'POST': 
         quoteDataJson = request.POST.get('json_quote_data')
-        quoteData = json.loads(quoteDataJson)
-        quote = Quote(text=quoteData['text'], author=quoteData['author'], category=quoteData['category'])
-        quote.save()
-        #redirect('quote', {'quote':quote})
-        return redirect('displayQuote')
+        #  Vérifier si les données JSON sont présentes
+        if quoteDataJson:
+            try:
+                quoteData = json.loads(quoteDataJson)
+                try:
+                    quote = Quote(text=quoteData['text'], author=quoteData['author'], category=quoteData['category'])
+                    quote.save()
+                    messages.success(request, "Citation sauvegardée avec succès !") # Message de succès
+                    return redirect('displayQuote') # Redirige vers l'affichage de la citation (qui peut montrer la même ou une nouvelle selon ta logique)                    
+                except Exception as db_error:
+                    # Gérer les erreurs spécifiques à la base de données (longueur de champ, intégrité, etc.)
+                    messages.error(request, f"Erreur lors de l'enregistrement de la citation : {db_error}")
+                    return redirect('displayQuote')
+                quote.save()
+                return redirect('displayQuote')
+            except json.JSONDecodeError as e:
+                # Erreur si la chaîne JSON est malformée
+                messages.error(request, "Erreur : Le format des données de la citation est invalide.")
+                return redirect('displayQuote')
+            except Exception as general_error:
+                # Attrape toute autre erreur inattendue
+                messages.error(request, f"Une erreur inattendue est survenue : {general_error}")
+                return redirect('displayQuote')
+        else:
+            messages.error(request, "Erreur : La citation à sauvegarder est introuvable.")
+            return redirect('displayQuote')
     else:
-        return HttpResponse("Ca n'a pas marche mec")
-
+        messages.error(request, "Accès non autorisé à cette page.")
+        return redirect('displayQuote')
 
 def retrieveSavedQuote(request):
     #objects etant le manager du model
